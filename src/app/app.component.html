@@ -1,21 +1,93 @@
 <div class="container">
   <h1>Angular API Project</h1>
-  <div class="text-danger" *ngIf='msg!=undefined'>
-    <h2>{{msg}}</h2>
+  <div class="text-danger" *ngIf="msg != undefined">
+    <h2>ID {{ dataidNumber }} {{ msg }}</h2>
   </div>
-  <div class="text-danger" *ngIf='errMsg!=undefined'>
-    <h2>{{errMsg}}</h2>
+  <div class="text-danger" *ngIf="errMsg != undefined">
+    <h2>{{ errMsg }}</h2>
   </div>
-  <input type="button" class="btn btn-primary" (click) = "displayData()" value="Display"/>
+  <input
+    type="button"
+    class="btn btn-primary"
+    (click)="displayData()"
+    value="Add Data"
+  />
   &nbsp;&nbsp;
-  <input type="button" class="btn btn-primary" (click) = "back()" value="Back"/>
+  <input type="button" class="btn btn-primary" (click)="back()" value="Back" />
 </div>
 
-
 <div class="container" *ngIf="loadData">
-  <br>
-  <input type="text" [(ngModel)] = "query" placeholder="Search">
-  <table class = "table table-hover">
+  <br />
+
+  <div class="container">
+    <form #frm="ngForm">
+      <div class="form-group">
+        <label for="userid"><b>User ID:</b></label>
+        <input
+          type="text"
+          class="form-control"
+          id="userid"
+          placeholder="User ID"
+          name="userid"
+          [(ngModel)]="employee.userId"
+          #userid="ngModel"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="id"><b>ID:</b></label>
+        <input
+          type="text"
+          class="form-control"
+          id="id"
+          placeholder="ID"
+          name="id"
+          [(ngModel)]="employee.id"
+          #id="ngModel"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="title"><b>Title:</b></label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          placeholder="Title"
+          name="title"
+          [(ngModel)]="employee.title"
+          #title="ngModel"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="body"><b>Body:</b></label>
+        <input
+          type="text"
+          class="form-control"
+          id="body"
+          placeholder="Body"
+          name="body"
+          [(ngModel)]="employee.body"
+          #body="ngModel"
+          required
+        />
+      </div>
+      <br />
+      <button type="submit" class="btn btn-success" (click)="addEmployee()">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<br />
+<div class="container">
+  <input type="text" [(ngModel)]="query" placeholder="Search" />
+  <table class="table table-hover">
     <thead>
       <tr>
         <th>User ID</th>
@@ -23,15 +95,23 @@
         <th>Title</th>
         <th>Status</th>
         <th>Delete</th>
-      </tr>  
+      </tr>
     </thead>
-    <tbody><tr *ngFor ="let item of data | search : query">
-      <td>{{item.userId}}</td>
-      <td>{{item.id}}</td>
-      <td>{{item.title}}</td>
-      <td>{{item.body}}</td>
-      <td><input type="button" class = "btn btn-danger" (click)="deleteEmployee(item.id)" value="Delete"></td>
-    </tr>
-  </tbody>
+    <tbody>
+      <tr *ngFor="let item of data | search: query">
+        <td>{{ item.userId }}</td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.body }}</td>
+        <td>
+          <input
+            type="button"
+            class="btn btn-danger"
+            (click)="deleteEmployee(item.id)"
+            value="Delete"
+          />
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>
